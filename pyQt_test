@@ -13,7 +13,7 @@ line = QVBoxLayout()
 vline = QVBoxLayout()
 
 label = QLabel('символ года 2021?')
-vline.addWidget(label,  Qt.AlignLeft )
+vline.addWidget(label,  alignment=Qt.AlignHCenter )
 radio1 = QRadioButton('год Быка')
 radio2 = QRadioButton('год Змеи')
 radio3 = QRadioButton('год Лошади')
@@ -29,9 +29,34 @@ line.addWidget(radio3)
 
 vline.addLayout(line)
 
-button = QPushButton('Проверить')
+button = QPushButton('Следующий вопрос')
 vline.addWidget(button, alignment=Qt.AlignHCenter)
 
+
+def show_result(result):
+    label.hide()
+    radio1.hide()
+    radio2.hide()
+    radio3.hide()
+    button.hide()
+    score = QLabel("Ты набрал: " + str(result))
+    vline.addWidget(score, alignment = Qt.AlignCenter)
+
+def check_second(result):
+    if rgroup.checkedId() == 1:
+        result = result + 0
+    elif rgroup.checkedId() == 2:
+        result = result + 10
+    elif rgroup.checkedId() == 3:
+        result = result + 0
+    show_result(result)
+
+def next_question(result):
+    label.setText('Сколько дней в феврале 2021 года?')
+    radio1.setText('29')
+    radio2.setText('28')
+    radio3.setText('31')
+    button.clicked.connect(check_second)
 
 def check(result = 0):
     if rgroup.checkedId() == 1:
@@ -40,8 +65,7 @@ def check(result = 0):
         result = result + 0
     elif rgroup.checkedId() == 3:
         result = result + 0
-    score = QLabel("Ты набрал: " + str(result))
-    vline.addWidget(score, alignment = Qt.AlignRight)
+    next_question(result)
 
 button.clicked.connect(check)
 
