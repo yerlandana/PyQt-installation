@@ -56,7 +56,7 @@ def next_question(result):
     radio1.setText('29')
     radio2.setText('28')
     radio3.setText('31')
-    button.clicked.connect(check_second)
+    button.clicked.connect(lambda: check_second(result))
 
 def check(result = 0):
     if rgroup.checkedId() == 1:
